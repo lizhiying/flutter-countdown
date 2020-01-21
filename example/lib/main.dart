@@ -1,6 +1,6 @@
+import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:countdown_flutter/countdown_flutter.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,8 +29,9 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             Center(
               child: CountdownFormatted(
-                duration: Duration(hours: 2),
+                duration: Duration(hours: 1),
                 builder: (BuildContext ctx, String remaining) {
+                  print("remaining: ${remaining}");
                   return Text(
                     remaining,
                     style: TextStyle(fontSize: 30),

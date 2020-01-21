@@ -23,12 +23,22 @@ class Countdown extends StatefulWidget {
 class _CountdownState extends State<Countdown> {
   Timer _timer;
   Duration _duration;
+  Duration _oldDuration;
+
   @override
   void initState() {
+    _oldDuration = widget.duration;
     _duration = widget.duration;
+
     startTimer();
 
     super.initState();
+  }
+
+  @override
+  @mustCallSuper
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -54,6 +64,15 @@ class _CountdownState extends State<Countdown> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.duration != _oldDuration) {
+      _duration = widget.duration;
+      _oldDuration = widget.duration;
+
+      _timer?.cancel();
+
+      startTimer();
+    }
+
     return widget.builder(context, _duration);
   }
 }
