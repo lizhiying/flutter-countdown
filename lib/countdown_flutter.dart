@@ -4,18 +4,20 @@ import 'package:countdown_flutter/utils.dart';
 import 'package:flutter/material.dart';
 
 class Countdown extends StatefulWidget {
-  const Countdown({
+  Countdown({
     Key key,
     @required this.duration,
     @required this.builder,
     this.onFinish,
     this.interval = const Duration(seconds: 1),
+    this.reStart = false,
   }) : super(key: key);
 
   final Duration duration;
   final Duration interval;
   final void Function() onFinish;
   final Widget Function(BuildContext context, Duration remaining) builder;
+  bool reStart;
   @override
   _CountdownState createState() => _CountdownState();
 }
@@ -71,6 +73,12 @@ class _CountdownState extends State<Countdown> {
       _timer?.cancel();
 
       startTimer();
+    }
+
+    if (_duration.inSeconds == 0 && widget.reStart == true) {
+      _timer.cancel();
+      _oldDuration = Duration(seconds: 0);
+      widget.reStart = false;
     }
 
     return widget.builder(context, _duration);
